@@ -36,7 +36,12 @@
 			var reg:RegExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/i;
 			return reg.test(str);
 		}
-		
+		/**
+		*去除给定字符串的所有换行符
+		**/
+		public static function trimLine(str:String):String{
+			return str.replace(/\n/g,"");
+		}
 		/**
 		 * 去除给定字符串头尾空白
 		 * 
