@@ -25,5 +25,8 @@ package as3.utils
 					return false;
 			return true;
 		}
+		public static function test(){
+			
+		}
 	}
 }
