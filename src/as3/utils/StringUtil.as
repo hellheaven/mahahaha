@@ -31,6 +31,141 @@
 		 * @param	str
 		 * @return
 		 */
+		 //是否是数值字符串;  
+        public static function isNumber(char:String):Boolean{  
+            if(char == null){  
+                return false;  
+            }  
+            return !isNaN(Number(char));  
+        } 
+         //是否为Double型数据;  
+        public static function isDouble(char:String):Boolean{  
+            char = trim(char);  
+            var pattern:RegExp = /^[-\+]?\d+(\.\d+)?$/;   
+            var result:Object = pattern.exec(char);  
+            if(result == null) {  
+                return false;  
+            }  
+            return true;  
+        }  
+        //Integer;  
+        public static function isInteger(char:String):Boolean{  
+            if(char == null){  
+                return false;  
+            }  
+            char = trim(char);  
+            var pattern:RegExp = /^[-\+]?\d+$/;   
+            var result:Object = pattern.exec(char);  
+            if(result == null) {  
+                return false;  
+            }  
+            return true;  
+        }  
+        //English;  
+        public static function isEnglish(char:String):Boolean{  
+            if(char == null){  
+                return false;  
+            }  
+            char = trim(char);  
+            var pattern:RegExp = /^[A-Za-z]+$/;   
+            var result:Object = pattern.exec(char);  
+            if(result == null) {  
+                return false;  
+            }  
+            return true;  
+        }  
+        //中文;  
+        public static function isChinese(char:String):Boolean{  
+            if(char == null){  
+                return false;  
+            }  
+            char = trim(char);  
+            var pattern:RegExp = /^[\u0391-\uFFE5]+$/;   
+            var result:Object = pattern.exec(char);  
+            if(result == null) {  
+                return false;  
+            }  
+            return true;  
+        }  
+        //双字节  
+        public static function isDoubleChar(char:String):Boolean{  
+            if(char == null){  
+                return false;  
+            }  
+            char = trim(char);  
+            var pattern:RegExp = /^[^\x00-\xff]+$/;   
+            var result:Object = pattern.exec(char);  
+            if(result == null) {  
+                return false;  
+            }  
+            return true;  
+        }  
+          
+        //含有中文字符  
+        public static function hasChineseChar(char:String):Boolean{  
+            if(char == null){  
+                return false;  
+            }  
+            char = trim(char);  
+            var pattern:RegExp = /[^\x00-\xff]/;   
+            var result:Object = pattern.exec(char);  
+            if(result == null) {  
+                return false;  
+            }  
+            return true;  
+        }  
+        //注册字符;  
+        public static function hasAccountChar(char:String,len:uint=15):Boolean{  
+            if(char == null){  
+                return false;  
+            }  
+            if(len < 10){  
+                len = 15;  
+            }  
+            char = trim(char);  
+            var pattern:RegExp = new RegExp("^[a-zA-Z0-9][a-zA-Z0-9_-]{0,"+len+"}$", "");   
+            var result:Object = pattern.exec(char);  
+            if(result == null) {  
+                return false;  
+            }  
+            return true;  
+        }  
+       //转换字符编码;  
+        public static function encodeCharset(char:String,charset:String):String{  
+            var bytes:ByteArray = new ByteArray();  
+            bytes.writeUTFBytes(char);  
+            bytes.position = 0;  
+            return bytes.readMultiByte(bytes.length,charset);  
+        }  
+          
+        //添加新字符到指定位置;         
+        public static function addAt(char:String, value:String, position:int):String {  
+            if (position > char.length) {  
+                position = char.length;  
+            }  
+            var firstPart:String = char.substring(0, position);  
+            var secondPart:String = char.substring(position, char.length);  
+            return (firstPart + value + secondPart);  
+        }  
+          
+        //替换指定位置字符;  
+        public static function replaceAt(char:String, value:String, beginIndex:int, endIndex:int):String {  
+            beginIndex = Math.max(beginIndex, 0);             
+            endIndex = Math.min(endIndex, char.length);  
+            var firstPart:String = char.substr(0, beginIndex);  
+            var secondPart:String = char.substr(endIndex, char.length);  
+            return (firstPart + value + secondPart);  
+        }  
+          
+        //删除指定位置字符;  
+        public static function removeAt(char:String, beginIndex:int, endIndex:int):String {  
+            return StringUtil.replaceAt(char, "", beginIndex, endIndex);  
+        }  
+          
+        //修复双换行符;  
+        public static function fixNewlines(char:String):String {  
+            return char.replace(/\r\n/gm, "\n");  
+        }  
 		public static function isEmail( str:String ):Boolean
 		{
 			var reg:RegExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/i;
@@ -146,5 +281,6 @@
 			}
 			return a.join('');
 		}
+
 	}
 }

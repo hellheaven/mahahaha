@@ -1,6 +1,10 @@
 package as3.utils
 {
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.geom.Point;
+
 	public class MovieClipUtil
 	{
 		public static function playTo( mc:MovieClip, toFrame:int ):void
@@ -18,6 +22,28 @@ package as3.utils
 		public static function playToEnd( mc:MovieClip ):void
 		{
 			MovieClipPlayer.addMovieClip(mc, mc.totalFrames);
+		}
+		//删除MC里的所有子元素
+		public static function removeAllChildren(mc:Sprite):void
+		{
+			while(mc.numChildren>0)
+			{
+				mc.removeChildAt(0);
+			}
+		}
+		//改变MC里面的注册点位置
+		public static function RegPoint($obj:Sprite , $point:Point):void
+		{
+			var tmp_point:Point = $obj.parent.globalToLocal($obj.localToGlobal($point));
+			var len:int = $obj.numChildren;
+			while (len--)
+			{
+				var tmp_obj:DisplayObject = $obj.getChildAt(len) as DisplayObject;
+				tmp_obj.x -=  $point.x;
+				tmp_obj.y -=  $point.y;
+			}
+			$obj.x = tmp_point.x;
+			$obj.y = tmp_point.y;
 		}
 	}
 }

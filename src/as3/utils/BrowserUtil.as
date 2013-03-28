@@ -1,8 +1,8 @@
  package as3.utils
 {
+	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
-	import flash.external.ExternalInterface;
 	import flash.system.Capabilities;
 	
 	public class BrowserUtil
@@ -58,7 +58,36 @@
 			+'return false;'
 			+'}', code);
 		}
-		
+		public static function ShareTo(sns:String,txt:String="",pic:String="",link:String=""):void
+		{
+			switch(sns)
+			{
+				case "sina":
+				{
+					getURL("http://v.t.sina.com.cn/share/share.php?title="+txt+"&pic="+pic+"&url="+link,"_blank");
+					break;
+				}
+				case "renren":
+				{
+					getURL("http://share.renren.com/share/buttonshare.do?title="+txt+"&images="+pic+"&link="+link,"_blank");
+					break;
+				}	
+				case "kaixin":
+				{
+					getURL("http://www.kaixin001.com/repaste/share.php?rcontent="+txt+"&rpic="+pic+"&rurl="+link,"_blank");
+					break;
+				}
+				case "qzone":
+				{
+					getURL("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title="+txt+"&pics="+pic+"&url="+link,"_blank");
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
+		}
 		/**
 		 * alert
 		 * @param	msg
