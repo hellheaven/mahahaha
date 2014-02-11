@@ -3,6 +3,22 @@
 	public class StringUtil
 	{
 		/**
+		 * 判断给定字符是否是中，日，韩文, 
+		 * @param	str
+		 * @return
+		 */
+		private function isCJK(str:String):Boolean{
+			var ch:Number=str.charCodeAt();
+			return (ch >= 0x4E00 && ch <= 0x9FBF)   // CJK Unified Ideographs
+			|| (ch >= 0x2E80 && ch <= 0x2FDF)   // CJK Radicals Supplement & Kangxi Radicals
+				|| (ch >= 0x2FF0 && ch <= 0x30FF)   // Ideographic Description Characters, CJK Symbols and Punctuation & Japanese
+				|| (ch >= 0x3100 && ch <= 0x31BF)   // Korean
+				|| (ch >= 0xAC00 && ch <= 0xD7AF)   // Hangul Syllables
+				|| (ch >= 0xF900 && ch <= 0xFAFF)   // CJK Compatibility Ideographs
+				|| (ch >= 0xFE30 && ch <= 0xFE4F)   // CJK Compatibility Forms
+				|| (ch >= 0x31C0 && ch <= 0x4DFF);  // Other exiensions
+		}
+		/**
 		 * HTML转义, entity to character
 		 * @example convert (&amp;) to (") no include brackets
 		 * @example convert (&#39;) to (') no include brackets
